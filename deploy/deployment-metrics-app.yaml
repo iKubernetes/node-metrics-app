@@ -3,7 +3,6 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: node-metrics-app
-  namespace: hello
   labels:
     app: node-metrics-app
 spec:
@@ -16,6 +15,10 @@ spec:
       name: node-metrics-app
       labels:
         app: node-metrics-app
+      #annotations:
+      #  prometheus.io/path: "/metrics"
+      #  prometheus.io/port: "80"
+      #  prometheus.io/scrape: "true"
     spec:
       containers:
       - name: node-metrics-app
