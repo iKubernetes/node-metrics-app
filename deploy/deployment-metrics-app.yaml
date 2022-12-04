@@ -1,0 +1,27 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: node-metrics-app
+  namespace: hello
+  labels:
+    app: node-metrics-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-metrics-app
+  template:
+    metadata:
+      name: node-metrics-app
+      labels:
+        app: node-metrics-app
+    spec:
+      containers:
+      - name: node-metrics-app
+        image: '__IMAGE__'
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+---
