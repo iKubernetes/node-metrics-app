@@ -1,14 +1,27 @@
-# node metrics app example
+# NodeJS metrics app example
 
-Start>
+NodeJS示例程序，用于演示简单演示由Prometheus抓取应用内建指标的功能。
+
+### 启动服务
+
+安装好nodejs，直接使用node命令启动即可。
+
 ```
-node ./myserver.js
+node src/myserver.js
 ```
 
-Deploy on k8s
+### 部署到Kubernetes之上
+
+需要事先将deployment-metrics-app.yaml文件中的“\__IMAGE__”替换为具体使用的镜像文件，例如“ikubernetes/metrics-app:v0.1”等。
+
 ```
 kubectl apply -f deploy/
 ```
+
+### 文件简要说明
+
+- Jenkinsfile：Jenkins Pipeline的示例定义，支持Sonar的代码质量扫描、制作Docker Image并完成镜像推送；
+- Dockerfile：Docker Build示例配置文件；
 
 ## iKubernetes公众号
 
