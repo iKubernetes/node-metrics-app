@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: node-metrics-app
+  labels:
+    app: node-metrics-app
+spec:
+  ingressClassName: 'nginx'
+  rules:
+  - host: metrics-app.magedu.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: node-metrics-app
+            port:
+              number: 80

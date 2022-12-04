@@ -1,0 +1,20 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-metrics-app-canary
+  labels:
+    app: node-metrics-app
+  annotations:
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "80"
+    prometheus.io/scrape: "true"
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+  selector:
+    app: node-metrics-app
+---

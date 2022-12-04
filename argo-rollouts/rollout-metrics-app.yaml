@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollouts-metrics-app
+spec:
+  replicas: 3 
+  strategy:
+    canary:
+      canaryService: node-metrics-app-canary  # required
+      stableService: node-metrics-app  # required
+      trafficRouting:
+        nginx:
+          stableIngress: node-metrics-app  # required
+      steps:
+      - setCanaryScale:
+          matchTrafficWeight: true
+      - setWeight: 5
+      - pause: {duration: 1m}
+      - setWeight: 10
+      - pause: {duration: 1m}
+      - setWeight: 15
+      - pause: {duration: 20}
+      - setWeight: 30
+      - pause: {duration: 40}
+      - setWeight: 45
+      - pause: {duration: 20}
+      - setWeight: 60
+      - pause: {duration: 20}
+      - setWeight: 75
+      - pause: {duration: 20}
+      - setWeight: 90
+      - pause: {duration: 20}
+  selector:
+    matchLabels:
+      app: node-metrics-app
+  template:
+    metadata:
+      labels:
+        app: node-metrics-app
+      #annotations:
+      #  prometheus.io/path: "/metrics"
+      #  prometheus.io/port: "80"
+      #  prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: node-metrics-app
+        image: 'hub.magedu.com/ikubernetes/node-metrics-app:5'
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+---
